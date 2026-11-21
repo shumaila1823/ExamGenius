@@ -1,4 +1,4 @@
-
+import os
 import time
 
 from fastapi import FastAPI, UploadFile, File, HTTPException
@@ -15,9 +15,19 @@ app = FastAPI(
     version="1.0.0"
 )
 
+FRONTEND_URL = os.getenv("FRONTEND_URL", "")
+
+allowed_origins = [
+    "http://localhost:5173",
+    "http://localhost:5174",
+]
+
+if FRONTEND_URL:
+    allowed_origins.append(FRONTEND_URL.rstrip("/"))
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

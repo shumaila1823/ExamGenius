@@ -32,8 +32,10 @@ client = genai.Client(
 )
 
 # Create a persistent ChromaDB database
+CHROMA_DB_PATH = os.getenv("CHROMA_DB_PATH", "chroma_db")
+
 chroma_client = chromadb.PersistentClient(
-    path="chroma_db"
+    path=CHROMA_DB_PATH
 )
 
 collection = chroma_client.get_or_create_collection(
